@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 import React, { lazy, Suspense } from "react"
 import { Loader } from "lucide-react";
@@ -26,6 +26,9 @@ function ProtectedRoute({ children }: React.PropsWithChildren) {
 }
 
 function App() {
+
+  const navigate = useNavigate();
+
   return (
     <div>
        <Toaster 
@@ -50,7 +53,7 @@ function App() {
           },
         }}
       />
-      <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center mt-14 mb-6'>
+      <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center mt-14 mb-6 cursor-pointer' onClick={()=>navigate('/home')} >
         TODO <span className='text-blue-500'>LIST</span>
       </h1>
       <Suspense fallback={<LoadingSpinner />}>
