@@ -1,7 +1,7 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 import React, { lazy, Suspense } from "react"
-import { Loader } from "lucide-react";
+import { Loader, LogOut } from "lucide-react";
 
 const Register = lazy(() => import("./pages/Register"));
 const Login = lazy(() => import("./pages/Login"));
@@ -28,34 +28,33 @@ function ProtectedRoute({ children }: React.PropsWithChildren) {
 function App() {
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+  const showLogout = token && location.pathname !== '/' && location.pathname !== '/register';
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
 
   return (
-    <div>
-       <Toaster 
-        position="top-center"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-          success: {
-            iconTheme: {
-              primary: '#10b981',
-              secondary: '#fff',
-            },
-          },
-          error: {
-            iconTheme: {
-              primary: '#ef4444',
-              secondary: '#fff',
-            },
-          },
-        }}
-      />
-      <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center mt-14 mb-6 cursor-pointer' onClick={()=>navigate('/home')} >
-        TODO <span className='text-blue-500'>LIST</span>
-      </h1>
+    <div className="">
+      <Toaster position="top-center" />
+      <div className="flex justify-between items-center px-4 sm:px-8 lg:px-16 mt-8 mb-4">
+        <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center flex-1'>
+          TODO <span className='text-blue-500'>LIST</span>
+        </h1>
+        
+        {showLogout && (
+          <button
+            onClick={handleLogout}
+            className=" text-red-500 hover:text-red-600 font-bold p-4 transition-colors"
+          >
+            <LogOut size={20} />
+          </button>
+        )}
+      </div>
+
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           <Route path="/register" element={<Register />} />
