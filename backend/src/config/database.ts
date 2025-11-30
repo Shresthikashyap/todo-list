@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+require('dotenv').config();
 
 export const connectDB = async (): Promise<void> => {
     const mongoURI = process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://localhost:27017/todoapp";
