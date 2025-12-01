@@ -37,7 +37,7 @@ A full-stack Todo List application built using the MERN stack with TypeScript on
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/todo-list.git
+https://github.com/Shresthikashyap/todo-list.git
 cd todo-list
 ```
 
